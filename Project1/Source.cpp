@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-#include <iostream>
 int Evklid(int a, int b)
 {
 	int k = 1;
@@ -24,10 +23,10 @@ int Evklid(int a, int b)
 	return b * k;
 }
 int main(void) {
-	setlocale(LC_ALL, "\0");
 	const double PI = 3.1415926;
 	int z, n,up,down,g,k,i=1;
 	double angle_pi, q=0,angle;
+	printf("Enter a and b:\n");
 	scanf_s("%d%d", &z, &n);
 	q = sqrt(z * z + n * n);
 	if (z == 0 || n==0)
@@ -79,13 +78,13 @@ int main(void) {
 		{
 			printf("%lf + i %lf\n", z / q, n / q);
 		}
-		printf("¬ведите степень, в которую желаете возвести комлексное число:\n");
+		printf("enter the degree of the number:\n");
 		scanf_s("%d", &g);
 		k = Evklid(down, g);
 		down = down / k;
 		g = g / k;
 		printf("%lf(cos PI %d/%d + i sin PI %d/%d)\n", powl(q, g), up * g, down, up * g, down);
-		printf("¬ведите степень корн€:\n");
+		printf("Enter the degree of the root:\n");
 		scanf_s("%d", &g);
 		up = up * 1000000;
 		g = g * 1000000;
