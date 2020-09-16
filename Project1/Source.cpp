@@ -46,22 +46,22 @@ int main(void) {
 	{
 		if (z > 0)
 		{
-			angle = atan(n / z);
+			angle = atan(n / z)*180/PI;
 		}
 		else if (n > 0)
 		{
-			angle = PI + atan(n / z);
+			angle = 180 + atan(n / z)*180/PI;
 		}
 		else
 		{
-			angle = atan(abs(n) / z) - PI;
+			angle = atan(n / z)*180/PI - 180;
 		}
-		angle_pi = PI / angle;
-		if (angle_pi < 0)
+		if (angle < 0)
 		{
-			angle_pi = angle_pi + 360;
+			angle = angle + 360;
 		}
 		up = 1000000;
+		angle_pi = 180 / angle;
 		down = round(angle_pi * up);
 		k = Evklid(up, down);
 		up = up / k;
