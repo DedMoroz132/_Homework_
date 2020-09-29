@@ -102,9 +102,9 @@ int main()
 		printf("%lf\n", ((double)up * g) / down1);
 		printf("Enter the degree of the root:\n");
 		scanf_s("%d", &g);
-		int n = g;
+		int p = g;
 		g = g;
-		for (i = 0; i < n; i++)
+		for (i = 0; i < p; i++)
 		{
 			up1 = (up + 2 * down * i);
 			k = Evklid(up1, g);
@@ -113,6 +113,23 @@ int main()
 			printf("%lf(cos PI %d/%d + i sin PI %d/%d)\n", powl(q, 1 / (double)g), up1, down * g1, up1, down * g1);
 			printf("%lf \n", (double)up1 / (down * g1));
 		}
+	}
+	if(t==0)
+	{
+		int p = 1;
+		printf("enter the degree of the number:\n");
+		scanf_s("%d", &g);
+		if (g % 2 == 0)
+			p == -1;
+		printf("%lf", p*(pow(q, g)));
+		if(n!=0 && p==1)
+			printf("i");
+		printf("\n");
+		printf("Enter the degree of the root:\n");
+		scanf_s("%d", &g);
+		printf("%lf", p * (pow(q, 1/(double)g)));
+		if (n != 0)
+			printf("pow(i,1/%d",g);
 	}
 	return 0;
 }
