@@ -1,0 +1,109 @@
+#include <stdio.h>
+double a[100][100] = { 0 };
+double g[100][100] = { 0 };
+int i;
+void FindZero(int n)
+{
+	double v, v2;
+	if (a[i][i] == 0)
+		for (int j = i + 1; j < n; j++)
+			if (a[j][i] != 0)
+			{
+				for (int k = 0; k < n; k++)
+				{
+					a[i][k] = a[i][k] - a[j][k];
+					g[i][k] = g[i][k] - g[j][k];
+				}
+				break;
+			}
+}
+double Gaus(int n)
+{
+	double sum = 1;
+	double v;
+	int k = 1;
+	i = 0;
+	while (i < n - 1)
+	{
+		FindZero(n);
+		if (a[i][i] == 0)
+		{
+			k = 0;
+			break;
+		}
+		for (int j = i + 1; j < n; j++)
+		{
+			if (a[j][i] != 0)
+			{
+				v = a[j][i] / a[i][i];
+				for (int p = 0; p < n; p++)
+				{
+					a[j][p] = a[j][p] - a[i][p] * v;
+					g[j][p] = g[j][p] - g[i][p] * v;
+				}
+			}
+		}
+		i++;
+	}
+	for (i = 0; i < n; i++)
+	{
+		sum = sum * a[i][i];
+	}
+	return sum * k;
+}
+void Gaus2(int n)
+{
+	double v;
+	for (i = n - 1; i >= 1; i--)
+	{
+		for (int j = i - 1; j >= 0; j--)
+		{
+			v = a[j][i] / a[i][i];
+			for (int k = 0; k < n; k++)
+			{
+				g[j][k] = g[j][k] - g[i][k] * v;
+			}
+			a[j][i] = 0;
+		}
+	}
+}
+void Gaus3(int n)
+{
+	for (i = 0; i < n; i++)
+	{
+		a[i][i] = 1 / a[i][i];
+		for (int j = 0; j < n; j++)
+			g[i][j] = g[i][j] * a[i][i];
+	}
+}
+
+int main(void) {
+	double sum;
+	int n;
+	scanf_s("%d", &n);
+	for (i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			scanf_s("%lf", &a[i][j]);
+			g[i][j] = 0;
+		}
+		g[i][i] = 1;
+	}
+	sum = Gaus(n);
+	if (sum != 0)
+	{
+		Gaus2(n);
+		Gaus3(n);
+		for (int j = 0; j < n; j++)
+		{
+			for (i = 0; i < n; i++)
+			{
+				printf("%lf ", g[j][i]);
+			}
+			printf("\n");
+		}
+	}
+	else
+		printf("This is a singular matrix");
+}
