@@ -1,0 +1,180 @@
+#include <stdio.h>
+#include <math.h>
+double a[100][100] = { 0 };
+int i,r,de;
+void viv(int m, int n)
+{
+	for (int j = 0; j < m; j++)
+	{
+		for (int d = 0; d < n; d++)
+		{
+			printf("%lf ", a[j][d]);
+		}
+		printf("\n");
+	}
+	printf("---------------------\n");
+}
+void FindZero(int m,int n)
+{
+	if (a[r][i] == 0)
+		for (int j = r + 1; j < m; j++)
+			if (a[j][i] != 0)
+			{
+				for (int k = 0; k < n; k++)
+				{
+					a[r][k] = a[r][k] - a[j][k];
+				}
+				break;
+			}
+}
+int Gaus(int m,int n)
+{
+	double v;
+	int k,w=0;
+	i = 0;
+	r = 0;
+	while ((r < m)&&(i<n))
+	{
+		k = 0;
+		FindZero(m,n);
+		if (fabs(a[r][i]) == 0)
+		{
+			i++;
+			k=1;
+		}
+		if (k == 0)
+		{
+			w++;
+			for (int j = r + 1; j < m; j++)
+			{
+				if (a[j][i] != 0)
+				{
+					v = a[j][i] / a[r][i];
+					for (int p = i; p < n; p++)
+					{
+						a[j][p] = (a[j][p] - (a[r][p] * v));
+					}
+				}
+			}
+		r++;
+		i++;
+		}
+		k = 0;
+	}
+	return w;
+}
+void reshenie(int m, int n)
+{
+	double v;
+	int j = 0;
+	while (fabs(a[m - 1][j]) == 0)
+		j++;
+	v = a[m - 1][j];
+	a[m - 1][j] = 1;
+	for (int h = j+1; h < n; h++)
+	{
+		a[m - 1][n + h] = -(a[m - 1][h]/v);
+		a[m - 1][h] = 0;
+		a[de][n + h] = h+1;
+	}
+	for (int t = m - 2; t >= 0; t--)
+	{
+		v = a[t][j];
+		a[t][j] = 0;
+		for (i = (j + 1); i < n; i++)
+		{
+			a[t][n + i] = (-(a[t][i]) + ((a[(m - 1)][(n + i)]) * v));
+			a[t][i] = 0;
+			
+		}
+	}
+	if ((m - 2) != 0)
+		reshenie(m - 1, n);
+}
+int main(void)
+{
+	int sum, y = 0;
+	int n,m,g;
+	scanf_s("%d%d", &m,&n);
+	for (i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			scanf_s("%lf", &a[i][j]);
+		}
+	}
+	sum = Gaus(m, n);
+	viv(m, n * 2);
+	de = m;
+	reshenie(sum, n);
+	viv(m+1, n * 2);
+	for (int j = 0; j < sum; j++)
+	{
+		int k = 0;
+		for (i = 0; i < n; i++)
+		{
+			if (a[j][i] != 0)
+			{
+				if (k == 1)
+					printf("+ ");
+				printf("%.3lfx%d ", a[j][i], i + 1);
+				k = 1;
+			}
+		}
+		if (a[j][i] != 0)
+		{
+			if (k == 1)
+				printf("+ ");
+			printf("%.3lfx%d ", a[j][i], i + 1);
+		}
+		printf("= ");
+		k = 0;
+		for (i = n; i < n*2; i++)
+		{
+			if (a[j][i] != 0)
+			{
+				y = 1;
+				if (k == 1)
+					printf("+ ");
+				printf("%.3lfx%d ", a[j][i], i-n+1);
+				k = 1;
+			}
+		}
+		if (a[j][i] != 0)
+		{
+			y = 1;
+			if (k == 1)
+				printf("+ ");
+			printf("%.3lfx%d", a[j][i], i-n+1);
+		}
+		printf("\n");
+	}
+	if (y == 0)
+		printf("There is no fund reshenii");
+	else
+	{
+		printf("-----------------------\n");
+		int k = (n * 2);
+		printf("Fundamental solutions:\n");
+		while (k >= n)
+		{
+			while ((a[m][k] == 0) && (k >= n))
+			{
+				k--;
+			}
+			if (k >= n)
+			{
+				for (int j = 0; j < sum; j++)
+				{
+					int f = 0;
+					while (a[j][f] == 0)
+						f++;
+					printf("x%d = %lf\n", f + 1, a[j][k]);
+				}
+				printf("-----------------------\n");
+			}
+			k = k - 1;
+		}
+	}
+	return 0;
+}
